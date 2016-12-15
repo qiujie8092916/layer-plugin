@@ -1,0 +1,53 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>text</title>
+		<link rel="stylesheet" type="text/css" href="manhua.css">
+		<style type="text/css">
+		button{
+			margin: 20px auto 0;    
+			display: block;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+		.container{
+			margin: 180px auto;
+		}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<button id="button_1" data-content="qiujie is a good boy!">Click me 1!</button>
+			<button id="button_2" data-content="I am twenty-five">Click me 2!</button>
+		</div>
+		
+    <script src="jquery-2.1.4.js"></script>
+    <script src="manhua.js" type="text/javascript"></script>
+		<script>
+			$(function(){
+				$('button').each(function(){
+					var container = $(this).attr("data-content")
+					var t = $(this).Dialog({
+						title : "I am a title",					//弹出层的标题
+						type : "text",									//弹出层类型(text、容器ID、URL、Iframe)
+						content : container,					//弹出层的内容获取(text文本、容器ID名称、URL地址、Iframe的地址)
+						scrollTop : 200,								//层滑动的高度也就是弹出层时离顶部滑动的距离
+						isAuto : false,							//设置弹出层时间，前提是isAuto=true
+						isClose : false,  								//设置自动关闭时间，前提是isClose=true
+						//launch: 'click'
+					});
+					
+					t.on({
+						click : function(){
+							t.Dialog('show')
+						}
+					})
+					
+				})
+			})
+		</script>
+
+</body>
+</html>
