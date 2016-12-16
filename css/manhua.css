@@ -1,0 +1,87 @@
+@charset "UTF-8";
+* {
+  padding: 0;
+  margin: 0; }
+
+html {
+  font-family: 'Microsoft YaHei';
+  font-size: 14px; }
+
+.container {
+  margin: 180px auto; }
+  .container button {
+    margin: 20px auto 0;
+    display: block;
+    padding: 5px 10px;
+    cursor: pointer; }
+
+/*! 弹出层插件样式开始 */
+.floatBoxBg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  z-index: 999; }
+
+.floatBox {
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border: 1px solid #e0e0e0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px; }
+  .floatBox .title {
+    height: 20px;
+    padding: 6px 6px 4px 12px;
+    color: #000;
+    border-bottom: 1px solid #e0e0e0;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-top-left-radius: 5px;
+    -ms-border-top-left-radius: 5px;
+    -o-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    -ms-border-top-right-radius: 5px;
+    -o-border-top-right-radius: 5px;
+    border-top-right-radius: 5px; }
+    .floatBox .title title {
+      margin: 0;
+      padding: 0;
+      display: inline;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 14px; }
+    .floatBox .title .close {
+      float: right;
+      cursor: pointer;
+      display: inline; }
+  .floatBox .content {
+    padding: 6px 12px 6px;
+    overflow-x: hidden;
+    overflow-y: auto; }
+
+.closeDialog {
+  position: absolute;
+  top: 12px;
+  right: -12px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  z-index: 100; }
+
+.closeDialog:hover {
+  margin-top: -1px;
+  position: relative fixed absolute; }
+
+/*! 弹出层插件样式结束  */
+
+/*# sourceMappingURL=manhua.css.map */
