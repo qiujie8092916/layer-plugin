@@ -8,8 +8,9 @@
 
 	<body>
 		<div class="container">
-			<button id="button_1" data-content="qiujie is a good boy!">Click me 1!</button>
-			<button id="button_2" data-content="I am twenty-five">Click me 2!</button>
+			<button id="button_1" data-content="Thank you for your clicking.This is a tip to reminder you of drawing attention on me." data-direction='bottom' data-type="text">Click me 1!</button>
+			<button id="button_2" data-content="http://image101.360doc.com/DownloadImg/2016/10/2719/83195451_8.jpg" data-direction='center'  data-type="img">Click me 2!</button>
+			<button id="button_3" data-content="http://www.baidu.com" data-width="1000" data-height="600" data-direction='center'  data-type="iframe">Click me 3!</button>
 		</div>
 		
     <script src="js/jquery-2.1.4.js"></script>
@@ -17,19 +18,29 @@
 		<script>
 			$(function(){
 				$('button').each(function(){
-					var container = $(this).attr("data-content")
+					var container = $(this).attr("data-content"),
+							direction = $(this).attr("data-direction"),
+							type = $(this).attr("data-type"),
+							width = $(this).attr("data-width"),
+							height = $(this).attr("data-height")
+							
 					var t = $(this).Dialog({
-						title : "I am a title",	//弹出层的标题
-						type : "text",				//弹出层类型(text、容器ID、URL、Iframe)
-						content : container,	//弹出层的内容获取(text文本、容器ID名称、URL地址、Iframe的地址)
-						scrollTop : 200,			//层滑动的高度也就是弹出层时离顶部滑动的距离
-						isAuto : false,				//设置弹出层时间，前提是isAuto=true
-						isClose : false,  		//设置自动关闭时间，前提是isClose=true
-						bg: [0.8, '#393D49']
+						title : $(this).text(),	//弹出层的标题
+						id : $(this).attr('id'),//元素id 
+						type : type,						//弹出层类型(text、img、iframe)
+						content : container,		//弹出层的内容获取(text文本、容器ID名称、URL地址、Iframe的地址)
+						scrollTop : 200,				//层滑动的高度也就是弹出层时离顶部滑动的距离
+						isAuto : false,					//设置弹出层时间，前提是isAuto=true
+						isClose : false,  			//设置自动关闭时间，前提是isClose=true
+						bg: [0.8, '#393D49'],		//背景遮掩层样式
+						direction: direction,		//弹出层方向
+						width: width,
+						height: height,
+						bgClose: true						//是否点击遮罩关闭
 					});
 					
 					t.on({
-						click : function(){
+						click : function(e){
 							t.Dialog('show')
 						}
 					})

@@ -1,13 +1,23 @@
-﻿*{ 
-    padding: 0; 
-    margin: 0;
-}
+﻿*{ padding: 0; margin: 0;}
 
 html{ 
     font: {
         family: 'Microsoft YaHei';
         size: 14px;
     }
+}
+
+iframe{
+    width: 100%;
+    height: 100%;  
+}
+
+img{
+    height: 100%;    
+}
+
+div{
+    box-sizing: border-box;    
 }
 
 .container{
@@ -44,6 +54,14 @@ html{
     border-#{$vert}-#{$horz}-radius: $degrees;
 }
 
+@mixin transform($value){
+    -webkit-transform: $value; /* Safari 和 Chrome */
+    -moz-transform: $value;    /* Firefox */
+    -ms-transform: $value;     /* IE 9 */
+    -o-transform: $value; 
+    transform: $value;
+}
+
 .floatBoxBg{
     width: 100%;
     height: 100%;
@@ -58,16 +76,19 @@ html{
 .floatBox{
     background: rgb(255, 255, 255);
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 1000;
     border: 1px solid #e0e0e0;
-    @include radius_1(5px);
+    @include radius_3(top, left, 5px);
+    @include radius_3(top, right, 5px);
+    opacity: 0;
+    //display: none;
     
     .title{
-        height: 20px;
+        background: #f7f7f7;
+        height: 30px;
         padding: 6px 6px 4px 12px;
-        color: #000;    
+        color: #000;
+        position: relative;
         border-bottom: 1px solid #e0e0e0;
         @include radius_3(top, left, 5px);
         @include radius_3(top, right, 5px);
@@ -84,18 +105,23 @@ html{
         }
         
         .close{
-            float: right;
             cursor: pointer;
-            display: inline;
+            display: inline;    
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            top: 8px;
+            right: 8px;
+            transition: all 0.15s linear;
+            &:hover{
+                @include transform(rotate(180deg));
+            }
         }
     }
     
     .content{
         padding: 6px 12px 6px;
-        overflow: {
-            x: hidden;
-            y: auto;
-        }
+        overflow: hidden;
     }
 }
 
