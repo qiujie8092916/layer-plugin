@@ -22,6 +22,7 @@
 						if(that.options.bg){
 								bg = "<div class='floatBoxBg'></div>"
 								that.bg = $(bg)
+								that.bg.css({height: $(document).height()})
 								$(document.body).append(that.bg)
 								
 								if(typeof that.options.bg === 'number'){
@@ -53,6 +54,8 @@
 								$(document.body).append(that.template)
 								//设置位置
 								that.setPosition()
+								if(that.options.moveable)
+										that.draggable()
 								that.trigger("show.done")
 						} else{
 								that.template.css({display: 'block'})
@@ -84,7 +87,7 @@
 
 						//监听点击空白可以退出
 						if(that.options.bgClose){
-								$(document).off('click').on('mouseup', function(event){
+								$(document).off('click').on('mousedown', function(event){
 										if((!$(event.target).closest('.floatBox').length) && event.target.id!==that.options.id){
 												that.trigger("hide")
 										}
@@ -93,52 +96,83 @@
 				},
 				
 				getDialog: function(){
-						var template = "<div class='floatBox'><div class='title'><title></title><img src='img/fancy_closebox.png' class='close' /></div><div class='content'></div></div>"
+						var template = "<div class='floatBox'><div class='title'><title></title><img src='img/fancy_closebox.png' class='close' alt='close'/></div><div class='content'></div></div>"
 						return $(template);
 				},
 				
 				setPosition: function(){
 						var _this = this.ele,		//原元素
-								refLeft = _this[0].offsetWidth / 2 + _this.offset().left,		//原元素中心的left
-								refTop = _this[0].offsetHeight / 2 + _this.offset().top,		//原元素中心的top
+								refLeft = _this[0].offsetWidth / 2 + _this[0].offsetLeft,		//原元素中心的left
+								refTop = _this[0].offsetHeight / 2 + _this[0].offsetTop,		//原元素中心的top
 								offset = 10,		//与原元素位置的偏移量
 								top, left 
 								
 						this.template.css({height : this.options.height ? this.options.height : 'auto',
-															 width : this.options.width ? this.options.width : 'auto'})
+															 width : this.options.width ? this.options.width : 'auto',
+															 position: 'absolute'})
 						this.template.find(".content").css({height: this.template.outerHeight() - this.template.find('.title').outerHeight()})
 						switch(this.options.direction){
 								case 'top':
-										top = _this.offset().top - this.template.height() - offset
-										left = refLeft - this.template.width() / 2
+										top = _this[0].offsetTop - this.template.outerHeight() - offset
+										left = refLeft - this.template.outerWidth() / 2
 										this.template.css({top: top, left: left})
 										break
 								case 'bottom':
-										top = _this.offset().top + _this[0].offsetHeight + offset
-										left = refLeft - this.template.width() / 2
+										top = _this[0].offsetTop + _this[0].offsetHeight + offset
+										left = refLeft - this.template.outerWidth() / 2
 										this.template.css({top: top, left: left})
 										break
 								case 'left':
-										top = refTop - this.template.height()/2
-										left = _this.offset().left - this.template.width() - offset
+										top = refTop - this.template.outerHeight()/2
+										left = _this[0].offsetLeft - this.template.outerWidth() - offset
 										this.template.css({top: top, left: left})
 										break
 								case 'right':
-										top = refTop - this.template.height()/2
-										left = _this.offset().left + _this[0].offsetWidth + offset
+										top = refTop - this.template.outerHeight()/2
+										left = _this[0].offsetLeft + _this[0].offsetWidth + offset
 										this.template.css({top: top, left: left})
 										break
 								case 'center':
-										top = ($(window).height() - this.template.height()) / 2
-										left = ($(window).width() - this.template.width()) / 2
+										top = ($(window).height() - this.template.outerHeight()) / 2 > 0 ? ($(window).height() - this.template.outerHeight()) / 2 : 0
+										left = ($(window).width() - this.template.outerWidth()) / 2 > 0 ? ($(window).width() - this.template.outerWidth()) / 2 : 0
 										this.template.css({top: top, left: left})
+										if(!top){
+												this.template.css({position: 'fixed'})
+										}
 								default:
 										break
 						}
+						//this.template.css({position: this.options.position})
+				},
+				
+				draggable: function(){
+						var that = this, _move = false, left_o, top_o, x_o, y_o
+						that.template.find(".title").on({
+								'mousedown': function(ev){
+										_move = true
+										left_o = that.template[0].offsetLeft		//原来的位置
+										top_o = that.template[0].offsetTop			//原来的位置
+										x_o = ev.clientX
+										y_o = ev.clientY
+										$(document).on({
+												'mousemove': function(event){
+														if(_move){
+																that.template.css({top: top_o - (y_o - event.clientY), 
+																		 							 left: left_o - (x_o - event.clientX)})
+																that.template.find(".title").css({cursor: 'all-scroll'})
+														}
+												},
+												'mouseup': function(event){
+														_move = false
+														that.template.find(".title").css({cursor: 'default'})
+												}
+										})
+								}
+						})
 				},
 				
 				defaultOptions: {
-						title    : "",								//弹出层的标题
+						title    : "",										//弹出层的标题
 						type     : "text",								//弹出层类型(text、容器ID、URL、Iframe)
 						content  : '',										//弹出层的内容(text文本、容器ID名称、URL地址、Iframe的地址)
 						width    : null,									//弹出层的宽度
@@ -151,7 +185,9 @@
 						direction: 'top',									//弹出层方向
 						bg       : 0.4,										//遮罩层背景颜色  bg: [0.8, '#393D49'](tring/Array/Boolean)
 						bgClose  : true,		 							//是否点击遮罩关闭
-						id       : null										//元素id
+						id       : null,									//元素id
+						position : 'absolute', 						//弹出层定位
+						moveable : false									//弹出层是否可以拖动
 				},
 				
 				trigger: function(triggernName) {
@@ -200,5 +236,4 @@
 		        return sColor;    
 		    }  
 		}
-		
 }) (jQuery);

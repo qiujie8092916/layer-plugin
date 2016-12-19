@@ -11,6 +11,11 @@
 			<button id="button_1" data-content="Thank you for your clicking.This is a tip to reminder you of drawing attention on me." data-direction='bottom' data-type="text">Click me 1!</button>
 			<button id="button_2" data-content="http://image101.360doc.com/DownloadImg/2016/10/2719/83195451_8.jpg" data-direction='center'  data-type="img">Click me 2!</button>
 			<button id="button_3" data-content="http://www.baidu.com" data-width="1000" data-height="600" data-direction='center'  data-type="iframe">Click me 3!</button>
+			
+			<fieldset>
+				<label>Input whatever you want:</label>
+				<textarea type="" placeholder="input in here" rows="20" cols="50"></textarea>
+			</fieldset>
 		</div>
 		
     <script src="js/jquery-2.1.4.js"></script>
@@ -36,7 +41,9 @@
 						direction: direction,		//弹出层方向
 						width: width,
 						height: height,
-						bgClose: true						//是否点击遮罩关闭
+						bgClose: false,					//是否点击遮罩关闭
+						position: 'fixed',			//弹出层定位(fixed, absolute)
+						moveable: true					//弹出层是否可以拖动
 					});
 					
 					t.on({

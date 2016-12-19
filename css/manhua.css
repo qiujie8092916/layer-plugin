@@ -14,7 +14,7 @@ iframe {
 img {
   height: 100%; }
 
-div {
+div, textarea, fieldset {
   box-sizing: border-box; }
 
 .container {
@@ -22,8 +22,20 @@ div {
   .container button {
     margin: 20px auto 0;
     display: block;
-    padding: 5px 10px;
+    padding: 5px 1px;
     cursor: pointer; }
+
+fieldset {
+  margin: 500px auto 0;
+  width: 1000px;
+  padding: 5px; }
+  fieldset label {
+    vertical-align: top;
+    padding-right: 10px; }
+  fieldset textarea {
+    resize: none;
+    border-radius: 5px;
+    padding: 5px 15px; }
 
 /*! 弹出层插件样式开始 */
 .floatBoxBg {
@@ -38,7 +50,6 @@ div {
 
 .floatBox {
   background: white;
-  position: absolute;
   z-index: 1000;
   border: 1px solid #e0e0e0;
   -webkit-border-top-left-radius: 5px;

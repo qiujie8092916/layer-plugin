@@ -16,7 +16,7 @@ img{
     height: 100%;    
 }
 
-div{
+div, textarea, fieldset{
     box-sizing: border-box;    
 }
 
@@ -26,8 +26,25 @@ div{
     button{
         margin: 20px auto 0;    
         display: block;
-        padding: 5px 10px;
+        padding: 5px 1px;
         cursor: pointer;
+    }
+}
+
+fieldset{
+    margin: 500px auto 0;
+    width: 1000px;
+    padding: 5px;
+    
+    label{
+        vertical-align: top;
+        padding-right: 10px;
+    }
+    
+    textarea{
+        resize: none;
+        border-radius: 5px;
+        padding: 5px 15px;
     }
 }
 
@@ -75,13 +92,12 @@ div{
 
 .floatBox{
     background: rgb(255, 255, 255);
-    position: absolute;
+    //position: absolute;
     z-index: 1000;
     border: 1px solid #e0e0e0;
     @include radius_3(top, left, 5px);
     @include radius_3(top, right, 5px);
     opacity: 0;
-    //display: none;
     
     .title{
         background: #f7f7f7;
